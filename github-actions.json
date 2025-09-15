@@ -9,15 +9,15 @@
     {
       "description": "This custom manager updates 'Kong/public-shared-actions' in YAML files located in '.github/', 'workflow-templates', or similar directories. The 'fileMatch' patterns match workflows and actions, aligning with the expressions used by the 'github-actions' manager (https://docs.renovatebot.com/modules/manager/github-actions/). It identifies dependencies with or without digests (e.g., '@v2.8.0' or '@digest # v2.8.0')",
       "customType": "regex",
-      "fileMatch": [
-        "(^|/)(workflow-templates|\\.(?:github|gitea|forgejo)/(?:workflows|actions))/.+\\.ya?ml$",
-        "(^|/)action\\.ya?ml$"
+      "managerFilePatterns": [
+        "/(^|/)(workflow-templates|\\.(?:github|gitea|forgejo)/(?:workflows|actions))/.+\\.ya?ml$/",
+        "/(^|/)action\\.ya?ml$/"
       ],
       "matchStrings": [
-        "(?<packageName>Kong\\/public-shared-actions\\/(?<depName>[^\\s@]+))@(?:(?<currentDigest>[^\\s]+) # )?v(?<currentValue>[^\\s]+)"
+        "(?<packageName>Kong\\/public-shared-actions\\/(?<depName>[^\\s@]+))@(?:(?<currentDigest>\\w+)\\s*#\\s*)?v?(?<currentValue>(?:\\d+(?:\\.\\d)+|\\w+))"
       ],
       "datasourceTemplate": "github-tags",
-      "extractVersionTemplate": "^(?:@{{{depName}}}@|v)(?<version>[0-9\\.]+)$",
+      "extractVersionTemplate": "^@?{{{depName}}}@v?(?<version>[0-9\\.]+)$",
       "autoReplaceStringTemplate": "{{{packageName}}}@{{#if newDigest}}{{{newDigest}}} # {{/if}}v{{{newVersion}}}",
       "versioningTemplate": "semver"
     }
