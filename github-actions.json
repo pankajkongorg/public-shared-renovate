@@ -7,6 +7,7 @@
     " versions"
   ],
   "extends": [
+    "group:githubArtifactActions",
     "helpers:pinGitHubActionDigests",
     "helpers:pinGitHubActionDigestsToSemver",
     "Kong/public-shared-renovate:github-actions-changed-files"
@@ -140,6 +141,40 @@
       "prBodyDefinitions": {
         "Package": "[{{{packageName}}}]({{{sourceUrl}}}) ([source]({{{sourceUrl}}}/tree/{{#if newVersion}}%40{{{depName}}}%40{{{newVersion}}}{{else}}{{#if newDigest}}{{{newDigest}}}{{else}}main{{/if}}{{/if}}/{{{depName}}}))"
       }
+    },
+    {
+      "description": [
+        " Enforce digest pinning for Kong/public-shared-actions sub-actions. This rule prioritizes",
+        " and always recreates PRs that pin or refresh commit digests for these actions, bypassing",
+        " normal schedules and Renovate rate limits so repositories get secure, updatable references",
+        " immediately",
+        "",
+        " Why: This monorepo now publishes per-sub-action tags like '<name>@<version>'",
+        " (e.g., 'workflow-notification@4.0.1') rather than simple 'vX.Y.Z' tags. Repositories",
+        " using '...@v2' cannot be auto-migrated to the new tag names without changing",
+        " the reference format (which would look like '...@workflow-notification@4.0.1'). Digest",
+        " pinning avoids the tag-name mismatch entirely because Renovate tracks and updates",
+        " by commit SHA and adds a friendly '# vX.Y.Z' comment for humans"
+      ],
+      "matchManagers": ["custom.regex"],
+      "matchPackageNames": ["Kong/public-shared-actions/**"],
+      "matchUpdateTypes": ["pinDigest"],
+      "extends": [":disableRateLimiting", ":prImmediately"],
+      "recreateWhen": "always",
+      "schedule": [],
+      "prHeader": "> [!CAUTION]\\n> This PR pins Kong/public-shared-actions to commit digests and is prioritized (bypasses schedules/rate limits). It will be re-created until merged.",
+      "prBodyNotes": [
+        "> [!NOTE] Why digest pinning is required for Kong/public-shared-actions",
+        "> Kong/public-shared-actions changed release tagging: sub-actions are released with tags in the form '<sub-action-name>@<version>' (not plain 'vX.Y.Z').",
+        "> For example, projects that used '.../slack-actions/workflow-notification@v2' and any other sub-actions previously referenced with plain version tags like 'vX...' or 'X...' cannot be auto-updated by tag alone, because the correct tag is 'workflow-notification@4.0.1', which would require '.../workflow-notification@workflow-notification@4.0.1'.",
+        "> With digest pinning, Renovate looks up the tag and records its commit SHA, so the tag name shape no longer matters.",
+        "> Example (safe form):",
+        "> ```yaml",
+        "> uses: Kong/public-shared-actions/slack-actions/workflow-notification@a18abf762d6e2444bcbfd20de70451ea1e3bc1b1 # v4.0.1",
+        "> ```",
+        "> This is safe and recommended: GitHub Actions security guidance advises pinning third-party actions to a full commit SHA to protect against tag moving and supply-chain attacks.",
+        "> References: GitHub Docs (Security hardening, pin to commit SHA): https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
+      ]
     }
   ]
 }
