@@ -8,8 +8,7 @@
   ],
   "extends": [
     "group:githubArtifactActions",
-    "helpers:pinGitHubActionDigestsToSemver",
-    "pankajkongorg/public-shared-renovate:github-actions-changed-files"
+    "helpers:pinGitHubActionDigestsToSemver"
   ],
   "customManagers": [
     {
@@ -80,7 +79,7 @@
         "/(^|/)action\\.ya?ml$/"
       ],
       "matchStrings": [
-        "(?<packageName>pankajkongorg/pankaj-public-shared-actions/(?:[0-9A-Za-z._-]*/)*(?<depName>[^\\s@]+))@(?:(?<currentDigest>[0-9A-Fa-f]{7,40})[\\t ]*#[\\t ]*)?v?(?<currentValue>[0-9]*(?:\\.[0-9]+){0,3}(?:-[0-9A-Za-z.-]+)?)(?<indentation>\\s|$)"
+        "(?<packageName>Kong/public-shared-actions/(?:[0-9A-Za-z._-]*/)*(?<depName>[^\\s@]+))@(?:(?<currentDigest>[0-9A-Fa-f]{7,40})[\\t ]*#[\\t ]*)?v?(?<currentValue>[0-9]*(?:\\.[0-9]+){0,3}(?:-[0-9A-Za-z.-]+)?)(?<indentation>\\s|$)"
       ],
       "datasourceTemplate": "github-tags",
       "extractVersionTemplate": "^@?(?:[0-9A-Za-z._-]*/)*{{{depName}}}[@_]v?(?<version>[0-9]+(?:\\.[0-9]+){0,3}(?:-[0-9A-Za-z.-]+)?)$",
@@ -93,7 +92,7 @@
         " Manage Kong/public-shared-actions updates using the custom manager, so disable the default",
         " GitHub Actions manager for these"
       ],
-      "matchPackageNames": ["pankajkongorg/pankaj-public-shared-actions"],
+      "matchPackageNames": ["Kong/public-shared-actions"],
       "matchManagers": ["github-actions"],
       "enabled": false
     },
@@ -108,7 +107,7 @@
         "   name that lives under different directories"
       ],
       "matchManagers": ["custom.regex"],
-      "matchPackageNames": ["pankajkongorg/pankaj-public-shared-actions/**"],
+      "matchPackageNames": ["Kong/public-shared-actions/**"],
       "pinDigests": true,
       "groupName": "{{{packageName}}}"
     },
@@ -132,7 +131,7 @@
         " the PR body table to reflect the full name"
       ],
       "matchManagers": ["custom.regex"],
-      "matchPackageNames": ["pankajkongorg/pankaj-public-shared-actions/**"],
+      "matchPackageNames": ["Kong/public-shared-actions/**"],
       "commitMessageTopic": "{{{packageName}}}",
       "commitMessageLowerCase": "never",
       "commitMessageAction": "bump",
@@ -159,7 +158,7 @@
         " the line with a friendly '# vX.Y.Z' comment for humans"
       ],
       "matchManagers": ["custom.regex"],
-      "matchPackageNames": ["pankajkongorg/pankaj-public-shared-actions/**"],
+      "matchPackageNames": ["Kong/public-shared-actions/**"],
       "matchCurrentValue": "/^v?[0-3](?:\\.[0-9]+){0,2}$/",
       "extends": [":disableRateLimiting", ":prImmediately"],
       "recreateWhen": "always",
