@@ -9,7 +9,7 @@
   "extends": [
     "group:githubArtifactActions",
     "helpers:pinGitHubActionDigestsToSemver",
-    "Kong/public-shared-renovate:github-actions-changed-files"
+    "pankajkongorg/public-shared-renovate:github-actions-changed-files"
   ],
   "customManagers": [
     {
@@ -80,7 +80,7 @@
         "/(^|/)action\\.ya?ml$/"
       ],
       "matchStrings": [
-        "(?<packageName>Kong/public-shared-actions/(?:[0-9A-Za-z._-]*/)*(?<depName>[^\\s@]+))@(?:(?<currentDigest>[0-9A-Fa-f]{7,40})[\\t ]*#[\\t ]*)?v?(?<currentValue>[0-9]*(?:\\.[0-9]+){0,3}(?:-[0-9A-Za-z.-]+)?)(?<indentation>\\s|$)"
+        "(?<packageName>pankajkongorg/pankaj-public-shared-actions/(?:[0-9A-Za-z._-]*/)*(?<depName>[^\\s@]+))@(?:(?<currentDigest>[0-9A-Fa-f]{7,40})[\\t ]*#[\\t ]*)?v?(?<currentValue>[0-9]*(?:\\.[0-9]+){0,3}(?:-[0-9A-Za-z.-]+)?)(?<indentation>\\s|$)"
       ],
       "datasourceTemplate": "github-tags",
       "extractVersionTemplate": "^@?(?:[0-9A-Za-z._-]*/)*{{{depName}}}[@_]v?(?<version>[0-9]+(?:\\.[0-9]+){0,3}(?:-[0-9A-Za-z.-]+)?)$",
@@ -93,7 +93,7 @@
         " Manage Kong/public-shared-actions updates using the custom manager, so disable the default",
         " GitHub Actions manager for these"
       ],
-      "matchPackageNames": ["Kong/public-shared-actions"],
+      "matchPackageNames": ["pankajkongorg/pankaj-public-shared-actions"],
       "matchManagers": ["github-actions"],
       "enabled": false
     },
@@ -108,7 +108,7 @@
         "   name that lives under different directories"
       ],
       "matchManagers": ["custom.regex"],
-      "matchPackageNames": ["Kong/public-shared-actions/**"],
+      "matchPackageNames": ["pankajkongorg/pankaj-public-shared-actions/**"],
       "pinDigests": true,
       "groupName": "{{{packageName}}}"
     },
@@ -132,7 +132,7 @@
         " the PR body table to reflect the full name"
       ],
       "matchManagers": ["custom.regex"],
-      "matchPackageNames": ["Kong/public-shared-actions/**"],
+      "matchPackageNames": ["pankajkongorg/pankaj-public-shared-actions/**"],
       "commitMessageTopic": "{{{packageName}}}",
       "commitMessageLowerCase": "never",
       "commitMessageAction": "bump",
@@ -159,7 +159,7 @@
         " the line with a friendly '# vX.Y.Z' comment for humans"
       ],
       "matchManagers": ["custom.regex"],
-      "matchPackageNames": ["Kong/public-shared-actions/**"],
+      "matchPackageNames": ["pankajkongorg/pankaj-public-shared-actions/**"],
       "matchCurrentValue": "/^v?[0-3](?:\\.[0-9]+){0,2}$/",
       "extends": [":disableRateLimiting", ":prImmediately"],
       "recreateWhen": "always",
@@ -169,7 +169,7 @@
       "dependencyDashboardApproval": false,
       "prHeader": "> [!CAUTION]\n> This PR upgrades `Kong/public-shared-actions` sub-action to v4+ and pins it to the commit digest. It is prioritized (bypasses schedules/rate limits). Closing this PR will not stop it; Renovate will automatically reopen or recreate it until it is merged.\n\n---",
       "prBodyNotes": [
-        "---\n> [!NOTE]\n> #### Mandatory upgrade to v4+ with automatic digest pinning for `Kong/public-shared-actions`\n>\n> Renovate is configured to upgrade any `Kong/public-shared-actions` sub-action still on versions below 4 to the latest v4+ version. As part of this upgrade, it will automatically pin each reference to the exact commit digest (and keep that digest refreshed over time).\n>\n> #### Background\n>\n> The `Kong/public-shared-actions` monorepo now publishes per-sub-action tags in the form `<sub-action>@<version>` (for example, `workflow-notification@4.0.1`) instead of plain `vX.Y.Z` tags. Older references like `...@v2` cannot be auto-migrated by tag alone.\n>\n> #### Why tag-only migration is not supported\n>\n> Important: Renovate will not change the tag format for you. Migrating from the older plain `vX.Y.Z` tags to the new per-sub-action tags while keeping tag-only references would require rewriting refs such as `...@v2` to a different tag name like `...@sca@5.1.1`. This contradicts the goal of dependency update automation because it relies on humans to manage tag-name changes and ongoing updates, which our automation is not designed to perform. For this reason, tag-only migration is not supported.\n>\n> Instead, this preset enforces digest pinning. Renovate resolves releases by tag, then writes the reference as the commit SHA for that release with a trailing human-friendly comment (e.g., `...@<sha> # v5.1.1`). Tracking commits rather than tag names keeps updates automated and robust even if tag naming conventions change.\n>\n> #### Security\n>\n> GitHub Actions security guidance recommends pinning third-party actions to a full commit SHA to protect against tag moving and supply-chain attacks.\n>\n> #### References\n>\n> - https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
+        "---\n> [!NOTE]\n> #### Mandatory upgrade to v4+ with automatic digest pinning for `pankajkongorg/pankaj-public-shared-actions`\n>\n> Renovate is configured to upgrade any `Kong/public-shared-actions` sub-action still on versions below 4 to the latest v4+ version. As part of this upgrade, it will automatically pin each reference to the exact commit digest (and keep that digest refreshed over time).\n>\n> #### Background\n>\n> The `Kong/public-shared-actions` monorepo now publishes per-sub-action tags in the form `<sub-action>@<version>` (for example, `workflow-notification@4.0.1`) instead of plain `vX.Y.Z` tags. Older references like `...@v2` cannot be auto-migrated by tag alone.\n>\n> #### Why tag-only migration is not supported\n>\n> Important: Renovate will not change the tag format for you. Migrating from the older plain `vX.Y.Z` tags to the new per-sub-action tags while keeping tag-only references would require rewriting refs such as `...@v2` to a different tag name like `...@sca@5.1.1`. This contradicts the goal of dependency update automation because it relies on humans to manage tag-name changes and ongoing updates, which our automation is not designed to perform. For this reason, tag-only migration is not supported.\n>\n> Instead, this preset enforces digest pinning. Renovate resolves releases by tag, then writes the reference as the commit SHA for that release with a trailing human-friendly comment (e.g., `...@<sha> # v5.1.1`). Tracking commits rather than tag names keeps updates automated and robust even if tag naming conventions change.\n>\n> #### Security\n>\n> GitHub Actions security guidance recommends pinning third-party actions to a full commit SHA to protect against tag moving and supply-chain attacks.\n>\n> #### References\n>\n> - https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions"
       ]
     }
   ]
